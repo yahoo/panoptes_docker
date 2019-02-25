@@ -2,7 +2,7 @@
 # Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
 
 FROM ubuntu:18.04
-MAINTAINER James Diss <rexfury@oath.com>
+MAINTAINER James Diss <rexfury@verizonmedia.com>
 # Update the date to bust cached layers.
 ENV Panoptes_environment_refreshed 2018-12-03-10:21
 ARG DEBIAN_FRONTEND=noninteractive
