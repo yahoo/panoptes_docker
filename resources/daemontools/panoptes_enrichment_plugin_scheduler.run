@@ -1,0 +1,11 @@
+#!/bin/bash
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+exec 2>&1
+exec setuidgid panoptes /home/panoptes_v/bin/celery beat \
+    -A yahoo_panoptes.enrichment.enrichment_plugin_scheduler \
+    -l info \
+    -S yahoo_panoptes.framework.celery_manager.PanoptesCeleryPluginScheduler \
+    --pidfile /home/panoptes/run/enrichment_plugin_scheduler.pid

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+exec echo 'SET panoptes:secrets:snmp_community_string:{$SNMP_SITE} {$SNMP_COMM_STRING}' | redis-cli
+exec setuidgid redis sh -c '
+  exec /usr/bin/redis-server /etc/redis/redis.conf
+'

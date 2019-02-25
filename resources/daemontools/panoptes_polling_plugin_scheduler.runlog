@@ -1,0 +1,8 @@
+#!/bin/bash
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+PATH=/usr/local/bin:/usr/bin:/bin
+exec 2>&1
+exec setuidgid panoptes multilog s5000 n5 /home/panoptes/logs/polling_plugin_scheduler/

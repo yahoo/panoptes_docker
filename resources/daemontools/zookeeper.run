@@ -1,0 +1,10 @@
+#!/bin/bash
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+export ZOOKEEPER_HOME=/usr/share/zookeeper
+exec 2>&1
+exec setuidgid zookeeper sh -c '
+  exec $ZOOKEEPER_HOME/bin/zkServer.sh start-foreground
+'

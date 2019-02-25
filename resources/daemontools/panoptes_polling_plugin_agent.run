@@ -1,0 +1,13 @@
+#!/bin/bash
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+exec 2>&1
+exec setuidgid panoptes /home/panoptes_v/bin/celery worker \
+    -A yahoo_panoptes.polling.polling_plugin_agent \
+    -l info \
+    -Q polling_plugin_agent \
+    -n polling_plugin_agent_001.%h \
+    -Ofair \
+    --max-tasks-per-child 10

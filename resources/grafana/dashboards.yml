@@ -1,0 +1,14 @@
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+# config file version
+apiVersion: 1
+
+providers:
+ - name: 'default'
+   orgId: 1
+   folder: ''
+   type: file
+   options:
+     path: /var/lib/grafana/dashboards

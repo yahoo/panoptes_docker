@@ -1,0 +1,11 @@
+#!/bin/bash
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export KAFKA_HOME=/home/kafka
+exec 2>&1
+exec setuidgid nobody sh -c '
+  exec $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
+'

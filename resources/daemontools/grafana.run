@@ -1,0 +1,11 @@
+#!/bin/bash
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+exec 2>&1
+export HOME=/usr/share/grafana
+exec /usr/sbin/grafana-server --homepath="/usr/share/grafana" --config="/etc/grafana/grafana.ini" \
+        cfg:default.log.mode="console" cfg:default.paths.data="/var/lib/grafana" \
+        cfg:default.paths.logs="/home/logs/grafana" cfg:default.paths.plugins="/var/lib/grafana/plugins" \
+        cfg:default.paths.provisioning="/etc/grafana/provisioning"

@@ -1,0 +1,22 @@
+# Copyright 2019, Oath Inc.
+#
+# Licensed under the terms of the Apache 2.0 license. See LICENSE file in https://github.com/yahoo/panoptes_docker/LICENSE for terms.
+
+# config file version
+apiVersion: 1
+
+# list of datasources that should be deleted from the database before the insertion of datasources below.
+deleteDatasources:
+- name: Panoptes
+  orgId: 1
+
+# list of datasources to insert/update depending
+# on what's available in the database
+datasources:
+- name: Panoptes
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://localhost:8086
+  database: Panoptes
+  editable: true
