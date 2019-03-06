@@ -1,4 +1,4 @@
-# Panoptes_docker
+# Panoptes in Docker
 
 > A Docker container for testing and observing Panoptes Functionality.
 
@@ -109,7 +109,7 @@ After launching the panoptes_docker container, you should be able to point a bro
 
 Use the auth pair `admin/admin` to get in, and don't worry about a new password, it won't last longer than the container.  Just skip it.
 
-The datasource and dashboard should be available immediately, however, metrics gathering is delayed by 5 minutes as a calming measure. Your dashboard should look a little like this:
+The datasource and dashboard should be available immediately, however, metrics gathering is delayed by 5 minutes. Your dashboard should look a little like this:
 
 ![Localhost default dashboard](resources/grafana_default_board.png)
 
@@ -140,7 +140,7 @@ source /home/panoptes_v/bin/activate
 
 ![show-services.sh](resources/panoptes_show_services.png)
 
-`show-influxdb.sh` first dumps the data that we're interested in, then tails the logs to show the following calls.  This is generally the first step in troubleshooting because InfluxDB holds the measurement data.  Note: there is a five minute delay in the collection of stats, and the output can get a little large. To help with this, run:
+`show-influxdb.sh` first dumps the data that we're interested in, then tails the logs to show the following calls.  This is generally the first step in troubleshooting because InfluxDB holds the measurement data.  Note: there is a 5 minute delay in the collection of stats, and the output can get a little large. To help with this, run:
 
 ```
 /usr/bin/influx -database 'Panoptes' -format=csv -execute 'SHOW MEASUREMENTS' | more
