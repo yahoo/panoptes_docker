@@ -101,7 +101,7 @@ docker run -d \
     panoptes_docker
 ```
 
-There is a five minute delay until the first metrics will show up.  This is an intentional traffic calming measure.
+There is a five minute delay until the first metrics will show up.
 
 ### Visualize with Grafana
 

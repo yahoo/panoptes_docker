@@ -4,7 +4,7 @@
 FROM ubuntu:18.04
 MAINTAINER James Diss <rexfury@verizonmedia.com>
 # Update the date to bust cached layers.
-ENV Panoptes_environment_refreshed 2018-12-03-10:21
+ENV Panoptes_environment_refreshed 2019-06-06-11:22
 ARG DEBIAN_FRONTEND=noninteractive
 # 2181 is zookeeper, 6379 is redis, 9092 is kafka, 161 is snmp, 3000 is grafana, 8086 is influxdb
 EXPOSE 80 161/udp 160 2181 3000 6379 8086 9092
@@ -48,13 +48,13 @@ RUN apt-get update && apt-get install -y \
 
 # Support ----
 # Kafka - http://kafka.apache.org/downloads
-# Installing Kafka ----- /home/kafka - apache.org/dist/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz
+# Installing Kafka ----- /home/kafka - archive.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz
 # Building path structures for supporting services
 # Adding in various configurations
 # changing out the permissions.
 RUN mkdir -p /home/downloads && \
     mkdir -p /home/kafka && \
-    curl "https://archive.apache.org/dist/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz" -o /home/downloads/kafka.tgz && \
+    curl "https://archive.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz" -o /home/downloads/kafka.tgz && \
     cd /home/kafka && \
     tar -xvzf "/home/downloads/kafka.tgz" --strip 1 && \
     mkdir -p /home/kafka/logs && \
