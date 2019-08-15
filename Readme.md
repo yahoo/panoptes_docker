@@ -195,7 +195,9 @@ See the [Panoptes Plugin](https://github.com/yahoo/panoptes/blob/master/docs/Con
 
 ## Additional Resources
 
+- [Panoptes Web Site](https://getpanoptes.io)
 - [Panoptes Source Code](https://github.com/yahoo/panoptes)
+- [Panoptes Documentation](https://github.com/yahoo/panoptes_documentation)
 - [Panoptes Concepts](https://github.com/yahoo/panoptes/blob/master/docs/Concepts.md)
 - [Panoptes Plugin Architecture](https://github.com/yahoo/panoptes/blob/master/docs/Concepts.md#plugins)
 - [Contributing to Panoptes](https://github.com/yahoo/panoptes/blob/master/docs/Contributing.md)

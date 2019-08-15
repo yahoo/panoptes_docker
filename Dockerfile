@@ -4,7 +4,7 @@
 FROM ubuntu:18.04
 MAINTAINER James Diss <rexfury@verizonmedia.com>
 # Update the date to bust cached layers.
-ENV Panoptes_environment_refreshed 2019-06-06-11:22
+ENV Panoptes_environment_refreshed 2019-08-15-11:40
 ARG DEBIAN_FRONTEND=noninteractive
 # 2181 is zookeeper, 6379 is redis, 9092 is kafka, 161 is snmp, 3000 is grafana, 8086 is influxdb
 EXPOSE 80 161/udp 160 2181 3000 6379 8086 9092
