@@ -4,7 +4,7 @@
 FROM ubuntu:18.04
 MAINTAINER James Diss <rexfury@verizonmedia.com>
 # Update the date to bust cached layers.
-ENV Panoptes_environment_refreshed 2019-08-15-11:40
+ENV Panoptes_environment_refreshed 2020-01-23-12:37
 ARG DEBIAN_FRONTEND=noninteractive
 # 2181 is zookeeper, 6379 is redis, 9092 is kafka, 161 is snmp, 3000 is grafana, 8086 is influxdb
 EXPOSE 80 161/udp 160 2181 3000 6379 8086 9092
@@ -24,15 +24,13 @@ RUN apt-get update && \
 RUN apt-get update && apt-get install -y \
     daemontools-run \
     netcat \
-    libsnmp-dev \
-    libssl-dev \
     openjdk-8-jdk \
     nano \
-    python2.7 \
-    python-pip \
-    python-setuptools \
-    python-virtualenv \
-    python-influxdb \
+    python3.6 \
+    python3-pip \
+    python3-setuptools \
+    python3-venv \
+    python3-influxdb \
     influxdb \
     influxdb-client \
     grafana \
@@ -155,17 +153,17 @@ RUN chown panoptes:panoptes /home/panoptes/conf*
 # Copying over the plugins
 # these are from https://github.com/yahoo/panoptes/tree/master/examples/plugins
 COPY resources/panoptes/plugins/discovery/*.panoptes-plugin \
-        /home/panoptes_v/lib/python2.7/site-packages/yahoo_panoptes/plugins/discovery/
+        /home/panoptes_v/lib/python3.6/site-packages/yahoo_panoptes/plugins/discovery/
 COPY resources/panoptes/plugins/enrichment/*.panoptes-plugin \
-        /home/panoptes_v/lib/python2.7/site-packages/yahoo_panoptes/plugins/enrichment/
+        /home/panoptes_v/lib/python3.6/site-packages/yahoo_panoptes/plugins/enrichment/
 COPY resources/panoptes/plugins/polling/*.panoptes-plugin \
-        /home/panoptes_v/lib/python2.7/site-packages/yahoo_panoptes/plugins/polling/
+        /home/panoptes_v/lib/python3.6/site-packages/yahoo_panoptes/plugins/polling/
 
 # Helper scripts to expose various bits of the supporting services.
 COPY resources/misc/*.sh        /home/panoptes/
 
 # Build Panoptes - /home/panoptes_v/bin/python
-RUN virtualenv /home/panoptes_v && . /home/panoptes_v/bin/activate && pip install yahoo-panoptes && deactivate
+RUN python3 -m venv /home/panoptes_v && . /home/panoptes_v/bin/activate && pip3 install yahoo-panoptes && deactivate
 
 # cwd /home
 WORKDIR /home/panoptes
