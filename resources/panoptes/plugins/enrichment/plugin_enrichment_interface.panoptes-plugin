@@ -1,6 +1,6 @@
 [Core]
 Name = Interface Enrichment Plugin
-Module = /home/panoptes_v/lib/python2.7/site-packages/yahoo_panoptes/plugins/enrichment/interface/plugin_enrichment_interface.py
+Module = /home/panoptes_v/lib/python3.6/site-packages/yahoo_panoptes/plugins/enrichment/interface/plugin_enrichment_interface.py
 
 [Documentation]
 Author = Oath, Inc.

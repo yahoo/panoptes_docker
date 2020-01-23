@@ -1,6 +1,6 @@
 [Core]
 Name = Device Interface Metrics Plugin
-Module = /home/panoptes_v/lib/python2.7/site-packages/yahoo_panoptes/plugins/polling/interface/plugin_polling_device_interface_metrics.py
+Module = /home/panoptes_v/lib/python3.6/site-packages/yahoo_panoptes/plugins/polling/interface/plugin_polling_device_interface_metrics.py
 
 [Documentation]
 Author = Oath, Inc.

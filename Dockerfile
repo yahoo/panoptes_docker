@@ -163,7 +163,7 @@ COPY resources/panoptes/plugins/polling/*.panoptes-plugin \
 COPY resources/misc/*.sh        /home/panoptes/
 
 # Build Panoptes - /home/panoptes_v/bin/python
-RUN python3 -m venv /home/panoptes_v && . /home/panoptes_v/bin/activate && pip3 install yahoo-panoptes && deactivate
+RUN python3 -m venv /home/panoptes_v && . /home/panoptes_v/bin/activate && pip3 install wheel && pip3 install yahoo-panoptes && deactivate
 
 # cwd /home
 WORKDIR /home/panoptes
