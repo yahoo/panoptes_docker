@@ -78,7 +78,8 @@ RUN mkdir -p /home/downloads && \
     cp /etc/snmp/snmpd.conf                 /etc/snmp/snmpd.conf.installed && \
     cp /usr/share/grafana/conf/sample.ini   /etc/grafana/grafana.ini && \
     cp /usr/share/grafana/conf/ldap.toml    /etc/grafana/ldap.toml && \
-    chown -R grafana:grafana "/var/lib/grafana" "/home/logs/grafana" "/var/lib/grafana/plugins" "/var/lib/grafana/dashboards" && \
+    chown -R grafana:grafana "/var/lib/grafana" "/home/logs/grafana" && \
+    chown -R grafana:grafana "/var/lib/grafana/plugins" "/var/lib/grafana/dashboards" && \
     chmod 777 "/var/lib/grafana" "/home/logs/grafana" "/var/lib/grafana/plugins" "/var/lib/grafana/dashboards"
 
 # Copying over the configuration files.
@@ -163,7 +164,8 @@ COPY resources/panoptes/plugins/polling/*.panoptes-plugin \
 COPY resources/misc/*.sh        /home/panoptes/
 
 # Build Panoptes - /home/panoptes_v/bin/python
-RUN python3 -m venv /home/panoptes_v && . /home/panoptes_v/bin/activate && pip3 install wheel && pip3 install yahoo-panoptes && deactivate
+RUN python3 -m venv /home/panoptes_v && . /home/panoptes_v/bin/activate && pip3 install wheel \
+  && pip3 install yahoo-panoptes && deactivate
 
 # cwd /home
 WORKDIR /home/panoptes
