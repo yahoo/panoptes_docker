@@ -100,6 +100,7 @@ COPY resources/grafana/dashboard.json          /var/lib/grafana/dashboards/local
 # THP warnings come from the HOST, not the docker image.  Don't go chasing waterfalls.
 # docker command -> `--sysctl net.core.somaxconn=511`
 COPY resources/redis/redis.conf                 /etc/redis/redis.conf
+COPY resources/redis/populate_redis.sh          /etc/redis/populate_redis.sh
 
 # Building out daemontools -----
 WORKDIR /etc/service/

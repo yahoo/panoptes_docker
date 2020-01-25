@@ -9,7 +9,7 @@ Website = https://github.com/yahoo/panoptes
 Description = Plugin to collect interface enrichment
 
 [main]
-execute_frequency = 300
+execute_frequency = 60
 resource_filter = resource_class = "system" AND resource_subclass = "host"
 enrichment_ttl = 900
 
