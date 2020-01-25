@@ -2,9 +2,15 @@
 
 > A Docker container for testing and observing Panoptes Functionality.
 
-Panoptes is a Python based network telemetry ecosystem that implements discovery, enrichment and polling. To learn more about Panoptes, check out the project's [GitHub repository](https://github.com/yahoo/panoptes/). This repository provides a workbench version of Panoptes inside a Docker container that is intended to be used for testing concepts and observing code operations.
+Panoptes is a Python based network telemetry ecosystem that implements discovery, enrichment and polling. To learn more 
+about Panoptes, check out the project's [GitHub repository](https://github.com/yahoo/panoptes/). This repository 
+provides a workbench version of Panoptes inside a Docker container that is intended to be used for testing concepts and 
+observing code operations.
 
-This does **not** follow best practices for deployment and shouldn't be used for production deployment. It's a very quick and dirty method to get a Panoptes instance up and running in a minimal amount of time with plenty of redundancy in place to allow enterprise scaling. While this isn't an efficient deployment, it does provide an accurate and operational build of the larger structure.
+This does **not** follow best practices for deployment and shouldn't be used for production deployment. It's a very 
+quick and dirty method to get a Panoptes instance up and running in a minimal amount of time with plenty of redundancy 
+in place to allow enterprise scaling. While this isn't an efficient deployment, it does provide an accurate and 
+operational build of the larger structure.
 
 ## Quick Reference
 If you're impatient, and simply want to get this up and running, check out the [quickstart guide](docker_quickstart.md).
@@ -48,29 +54,38 @@ Tested on [18.09.1](https://github.com/docker/docker-ce/releases/tag/v18.09.1)
 
 ## Background
 
-Panoptes is typically run in a distributed system, but it can be difficult to set up a working hive of the various moving parts. Panoptes can be horizontally scaled for metric collection by adding more capacity to run collection, this docker image simply cuts the total number of nodes down to *1*. This version also runs from a json file, but we use a command database internally and are working to extend this to CSV files.
+Panoptes is typically run in a distributed system, but it can be difficult to set up a working hive of the various 
+moving parts. Panoptes can be horizontally scaled for metric collection by adding more capacity to run collection, this 
+docker image simply cuts the total number of nodes down to *1*. This version also runs from a json file, but we use a 
+command database internally and are working to extend this to CSV files.
 
 The following image provides a visual representation of the services running inside this container.
 
 ![Panoptes Block diagram](resources/panoptes_docker_block.svg?sanitize=true)
 
-This container is based on Ubuntu:18.04, and includes Python2.7, open-jdk 8, redis, zookeeper, and influxdb. There are also a few tools that are included for testing purposes, but are not necessary for operation of Panoptes:
+This container is based on Ubuntu:18.04, and includes Python2.7, open-jdk 8, redis, zookeeper, and influxdb. There are 
+also a few tools that are included for testing purposes, but are not necessary for operation of Panoptes:
 
 - Netcat - Used to check functionality of the services
 - tar - Used to view log archives.
 - snmpd - Provides an easy target to poll
 - nano - Makes it easier to open and modify configuration files and scripts.
-- daemontools - Handles output and schedules the various subcomponents of Panoptes. Panoptes typically relies on its granular logging system to redirect to logging servers, but daemontools solves this requirement here.
+- daemontools - Handles output and schedules the various subcomponents of Panoptes. Panoptes typically relies on its 
+granular logging system to redirect to logging servers, but daemontools solves this requirement here.
 - Grafana - Included as a visualization tool. See [the section on Grafana](#visualize-with-grafana) for details.
 
-The container also installs a specific version of Kafka, because of a hard dependency.  This is accomplished by downloading and building the proper version from [the ASF archives](https://archive.apache.org/dist/kafka/). 
+The container also installs a specific version of Kafka, because of a hard dependency.  This is accomplished by 
+downloading and building the proper version from [the ASF archives](https://archive.apache.org/dist/kafka/). 
 
-The configuration files for the services included in this image are available to browse under the `resources/` directory structure. Of particular interest will be the `resources/daemontools/panoptes_*.run` files, as these are the calls to the various Panoptes components.
+The configuration files for the services included in this image are available to browse under the `resources/` directory 
+structure. Of particular interest will be the `resources/daemontools/panoptes_*.run` files, as these are the calls to 
+the various Panoptes components.
 
 ## Install and Setup
 First, you will need to have docker [installed on your machine](https://docs.docker.com/install/).
 
-Then, You can either run [the pre-built image we've provided on Docker Hub](https://hub.docker.com/r/panoptes/panoptes_docker), or Build the image yourself from the [source code](https://github.com/yahoo/panoptes_docker).
+Then, You can either run [the pre-built image we've provided on Docker Hub](https://hub.docker.com/r/panoptes/panoptes_docker), 
+or Build the image yourself from the [source code](https://github.com/yahoo/panoptes_docker).
 
 
 To use the pre-built image from Docker Hub, simply pull it with `docker pull`:
@@ -88,7 +103,8 @@ docker build . -t panoptes_docker
 
 ### Usage
 
-This container requires quite a lot of processing power since it contains a distributed system that has been packed into a small container. Because of this, you should consider limiting the resources available to the container.
+This container requires quite a lot of processing power since it contains a distributed system that has been packed into 
+a small container. Because of this, you should consider limiting the resources available to the container.
 
 The following command will run panoptes_docker inside a container:
 
@@ -105,15 +121,19 @@ There is a five minute delay until the first metrics will show up.
 
 ### Visualize with Grafana
 
-After launching the panoptes_docker container, you should be able to point a browser at http://127.0.0.1:8080 and see the Grafana instance.
+After launching the panoptes_docker container, you should be able to point a browser at http://127.0.0.1:8080 and see 
+the Grafana instance.
 
-Use the auth pair `admin/admin` to get in, and don't worry about a new password, it won't last longer than the container.  Just skip it.
+Use the auth pair `admin/admin` to get in, and don't worry about a new password, it won't last longer than the 
+container.  Just skip it.
 
-The datasource and dashboard should be available immediately, however, metrics gathering is delayed by 5 minutes. Your dashboard should look a little like this:
+The datasource and dashboard should be available immediately, however, metrics gathering is delayed by 5 minutes. Your 
+dashboard should look a little like this:
 
 ![Localhost default dashboard](resources/grafana_default_board.png)
 
-Note that any changes you make to the dashboard won't survive the death of the container. If you want to learn more about Grafana, [check out the docs on getting started](http://docs.grafana.org/guides/getting_started/).
+Note that any changes you make to the dashboard won't survive the death of the container. If you want to learn more 
+about Grafana, [check out the docs on getting started](http://docs.grafana.org/guides/getting_started/).
 
 ### Examine the Image
 
@@ -122,11 +142,15 @@ Use `docker exec` to access the container for examination.
 ```
 docker exec -it panoptes_docker bash
 ```
-If you downloaded the prebuilt image, use `panoptes/panoptes_docker` in this example. This will drop you into the container at `/home/panoptes`, and there will be some scripts available that expose the different services running in the container and split the various log files into meaningful groups.
+If you downloaded the prebuilt image, use `panoptes/panoptes_docker` in this example. This will drop you into the 
+container at `/home/panoptes`, and there will be some scripts available that expose the different services running in 
+the container and split the various log files into meaningful groups.
 
 ![Scripts Ahoy](resources/home_panoptes_ls.png)
 
-All of these scripts are copied into the docker container from `resources/misc`. If you're going to interact with the python scripts in the container, you need to operate in the proper a virtual environment. To do so, run the following after you login to the container:
+All of these scripts are copied into the docker container from `resources/misc`. If you're going to interact with the 
+python scripts in the container, you need to operate in the proper a virtual environment. To do so, run the following 
+after you login to the container:
 
 ```
 source /home/panoptes_v/bin/activate
@@ -140,7 +164,9 @@ source /home/panoptes_v/bin/activate
 
 ![show-services.sh](resources/panoptes_show_services.png)
 
-`show-influxdb.sh` first dumps the data that we're interested in, then tails the logs to show the following calls.  This is generally the first step in troubleshooting because InfluxDB holds the measurement data.  Note: there is a 5 minute delay in the collection of stats, and the output can get a little large. To help with this, run:
+`show-influxdb.sh` first dumps the data that we're interested in, then tails the logs to show the following calls.  
+This is generally the first step in troubleshooting because InfluxDB holds the measurement data.  Note: there is a 5 
+minute delay in the collection of stats, and the output can get a little large. To help with this, run:
 
 ```
 /usr/bin/influx -database 'Panoptes' -format=csv -execute 'SHOW MEASUREMENTS' | more
@@ -148,11 +174,14 @@ source /home/panoptes_v/bin/activate
 
 ![show-influxdb.sh](resources/panoptes_show_influxdb.png)
 
-`show-logs.sh` will tail all the relevant logs, but is of limited utility unless you really need a scrolling list of log updates. Then again, perhaps you run a TV crime lab.
+`show-logs.sh` will tail all the relevant logs, but is of limited utility unless you really need a scrolling list of 
+log updates. Then again, perhaps you run a TV crime lab.
 
-`show-panoptes.sh`, `show-panoptes-agents.sh`, `show-panoptes-discovery.sh`, `show-panoptes-polling.sh` and `show-panoptes-schedulers.sh` show different aspects of the Panoptes system in operation by tailing the relevant logs.
+`show-panoptes.sh`, `show-panoptes-agents.sh`, `show-panoptes-discovery.sh`, `show-panoptes-polling.sh` and 
+`show-panoptes-schedulers.sh` show different aspects of the Panoptes system in operation by tailing the relevant logs.
 
-Finally, `show-snmpwalk.sh` effectively queries *localhost* for it's SNMP OIDs.  This is for checking, but also provides a glimpse into the world of OIDs.
+Finally, `show-snmpwalk.sh` effectively queries *localhost* for it's SNMP OIDs.  This is for checking, but also provides 
+a glimpse into the world of OIDs.
 
 
 Once you're done, stop and remove the container before trying to run another.
@@ -167,7 +196,10 @@ Panoptes is run as a python module, so the relevant code is under site-packages 
 
 ### Runtime
 
-You can override the default [localhost.json](resources/panoptes/localhost.json) by supplying one externally and adding a flag during the container runtime. The `-v` join effectively overlays the *default* localhost.json built into the container.  This example uses a localhost.json at `/data/servers/panoptes/conf` on the host.  Use ```-v <source_location>:/home/panoptes/conf/localhost.json``` as a template.
+You can override the default [localhost.json](resources/panoptes/localhost.json) by supplying one externally and adding 
+a flag during the container runtime. The `-v` join effectively overlays the *default* localhost.json built into the 
+container.  This example uses a localhost.json at `/data/servers/panoptes/conf` on the host.  
+Use ```-v <source_location>:/home/panoptes/conf/localhost.json``` as a template.
 
 Both `-e` variables are optional and default during build time to the values shown.
 
@@ -189,7 +221,8 @@ docker run -d \
 
 ### Plugins
 
-During the build of the container, the plugins from each subdirectory of `/resource/panoptes/plugins` are copied into the container, so this is a good entry point into the structure.
+During the build of the container, the plugins from each subdirectory of `/resource/panoptes/plugins` are copied into 
+the container, so this is a good entry point into the structure.
 
 See the [Panoptes Plugin](https://github.com/yahoo/panoptes/blob/master/docs/Concepts.md#plugins) page for details
 
@@ -207,7 +240,8 @@ See the [Panoptes Plugin](https://github.com/yahoo/panoptes/blob/master/docs/Con
 
 ## Contribute
 
-Please refer to [the contributing.md file](Contributing.md) for information about how to get involved. We welcome issues, questions, and pull requests. Pull Requests are welcome.
+Please refer to [the contributing.md file](Contributing.md) for information about how to get involved. We welcome issues, 
+questions, and pull requests. Pull Requests are welcome.
 
 ## License
 

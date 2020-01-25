@@ -1,6 +1,7 @@
 # Panoptes_docker Quickstart Guide
 
-This is a quickstart to get running with a workbench version of Panoptes inside a Docker container that is intended to be used for testing concepts and observing code operations.
+This is a quickstart to get running with a workbench version of Panoptes inside a Docker container that is intended to 
+be used for testing concepts and observing code operations.
 
 ## Build the image
 
@@ -11,9 +12,11 @@ docker build . -t panoptes_docker
 
 ## Run the image
 
-Run as a container.  This does use quite a lot of processor as Panoptes is a distributed system jammed into a tiny container.
+Run as a container.  This does use quite a lot of processor as Panoptes is a distributed system jammed into a tiny 
+container.
 
-The `-v` join effectively overlays the *default* localhost.json built into the container.  This example uses a localhost.json at `/data/servers/panoptes/conf` on the host.
+The `-v` join effectively overlays the *default* localhost.json built into the container.  This example uses a 
+localhost.json at `/data/servers/panoptes/conf` on the host.
 
 Both `-e` variables are optional and default during build time to the values shown.
 
@@ -28,9 +31,10 @@ docker run -d \
     -p 127.0.0.1:8080:3000/tcp \
     panoptes_docker
 ```
-Note:  There is a five minute delay until the first metrics will show up.  This is an intentional traffic calming measure.
+Note:  There is a five minute delay until the first metrics will show up.
 
-Grafana can be reached at http://127.0.0.1:8080 with 'admin' as the username and password; this dashboard will show network statistics for localhost.  [More details about the Grafana instance can be found here](Readme.md#grafana).
+Grafana can be reached at http://127.0.0.1:8080 with 'admin' as the username and password; this dashboard will show 
+network statistics for localhost.  [More details about the Grafana instance can be found here](Readme.md#grafana).
 
 The container itself consumes around 200Mb of memory an hour.
 
@@ -54,7 +58,8 @@ docker stop panoptes_docker && docker rm panoptes_docker
 
 ## Configuration
 
-Panoptes runs as a python module, so the relevant code is under site-packages in the virtual environment (`/home/panoptes_v/lib/site-packages`)
+Panoptes runs as a python module, so the relevant code is under site-packages in the virtual environment 
+(`/home/panoptes_v/lib/site-packages`)
 
 ### Docker development
 
