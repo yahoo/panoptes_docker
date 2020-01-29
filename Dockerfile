@@ -10,7 +10,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 80 161/udp 160 2181 3000 6379 8086 9092
 
 # runtime overrideables
-ENV SNMP_SITE local
+ENV SNMP_SITE localhost
 ENV SNMP_COMM_STRING public
 
 # Grafana from the repo.  Minimal apt-get action just in case it moves to repo.

@@ -15,12 +15,22 @@ docker build . -t panoptes_docker
 Run as a container.  This does use quite a lot of processor as Panoptes is a distributed system jammed into a tiny 
 container.
 
+You can run a minimal default container with;
+
+```bash
+docker run -d --sysctl net.core.somaxconn=511 --name="panoptes_docker" --shm-size=2G -p 127.0.0.1:8080:3000/tcp \
+    panoptes_docker
+```
+
+More advanced options are available to change operations of the container. 
+
 The `-v` join effectively overlays the *default* localhost.json built into the container.  This example uses a 
-localhost.json at `/data/servers/panoptes/conf` on the host.
+localhost.json at `/data/servers/panoptes/conf` on the host machine. Please substitute your own locations and/or 
+filenames, but the destination inside the container should stay the same - `/home/panoptes/conf/localhost.json`.
 
 Both `-e` variables are optional and default during build time to the values shown.
 
-```
+```bash
 docker run -d \
     --sysctl net.core.somaxconn=511 \
     --name="panoptes_docker" \
@@ -31,6 +41,18 @@ docker run -d \
     -p 127.0.0.1:8080:3000/tcp \
     panoptes_docker
 ```
+
+We had some problems getting the community strings into redis, so you will need to run the script 
+`/etc/redis/populate_redis.sh` inside the container.  We'll fix this inconvenience at some point.
+
+```bash
+docker exec -it panoptes_docker bash
+./etc/redis/populate_redis.sh
+exit
+```
+
+This will populate redis with the SNMP_SITE and SNMP_COMM_STRING environment variables.
+
 Note:  There is a five minute delay until the first metrics will show up.
 
 Grafana can be reached at http://127.0.0.1:8080 with 'admin' as the username and password; this dashboard will show 
