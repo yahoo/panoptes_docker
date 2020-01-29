@@ -39,7 +39,7 @@ James Diss: rexfury@verizonmedia.com
 
 **Supported Docker Versions**
 
-Tested on [18.09.1](https://github.com/docker/docker-ce/releases/tag/v18.09.1)
+Tested on [19.03.5](https://github.com/docker/docker-ce/releases/tag/v19.03.5)
 
 ## Table of Contents
 
@@ -63,7 +63,7 @@ The following image provides a visual representation of the services running ins
 
 ![Panoptes Block diagram](resources/panoptes_docker_block.svg?sanitize=true)
 
-This container is based on Ubuntu:18.04, and includes Python2.7, open-jdk 8, redis, zookeeper, and influxdb. There are 
+This container is based on Ubuntu:18.04, and includes Python3.6, open-jdk 8, redis, zookeeper, and influxdb. There are 
 also a few tools that are included for testing purposes, but are not necessary for operation of Panoptes:
 
 - Netcat - Used to check functionality of the services
@@ -84,17 +84,8 @@ the various Panoptes components.
 ## Install and Setup
 First, you will need to have docker [installed on your machine](https://docs.docker.com/install/).
 
-Then, You can either run [the pre-built image we've provided on Docker Hub](https://hub.docker.com/r/panoptes/panoptes_docker), 
-or Build the image yourself from the [source code](https://github.com/yahoo/panoptes_docker).
-
-
-To use the pre-built image from Docker Hub, simply pull it with `docker pull`:
-
-```
-docker pull panoptes/panoptes_docker
-```
-
-To build the image from scratch, first clone the repository and run `docker build` from inside the directory
+To build the image, first clone the [source code](https://github.com/yahoo/panoptes_docker) and run `docker build` 
+from inside the directory
 
 ```
 git clone https://github.com/yahoo/panoptes_docker.git && cd panoptes_docker
@@ -117,7 +108,17 @@ docker run -d \
     panoptes_docker
 ```
 
-There is a five minute delay until the first metrics will show up.
+There is a five minute delay until the first metrics will show up.  Due to an issue getting the snmp_community strings 
+into the container's redis, we do need you to run a script on the running container;
+
+```bash
+docker exec -it panoptes_docker bash
+./etc/redis/populate_redis.sh
+exit
+```
+
+This effectively writes the environment variables SNMP_SITE and SNMP_COMM_STRING into Redis.  These default to `local` 
+and `public` respectively, and can be overriden in the `docker run` command by supplying `-e <VAR> value`. 
 
 ### Visualize with Grafana
 
@@ -203,7 +204,7 @@ Use ```-v <source_location>:/home/panoptes/conf/localhost.json``` as a template.
 
 Both `-e` variables are optional and default during build time to the values shown.
 
-`SNMP_SITE` defaults to `localhost`, and is one pair of the SNMP Secrets.
+`SNMP_SITE` defaults to `local`, and is one pair of the SNMP Secrets.
 
 `SNMP_COMM_STRING` defaults to `public`, but would be the 'community string' for the SNMP_SITE.
 
@@ -212,7 +213,7 @@ docker run -d \
     --sysctl net.core.somaxconn=511 \
     --name="panoptes_docker" \
     --shm-size=2G \
-    -e SNMP_SITE="localhost" \
+    -e SNMP_SITE="local" \
     -e SNMP_COMM_STRING="public" \
     -v /data/servers/panoptes/conf/localhost.json:/home/panoptes/conf/localhost.json \
     -p 127.0.0.1:8080:3000/tcp \
