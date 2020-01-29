@@ -204,7 +204,7 @@ Use ```-v <source_location>:/home/panoptes/conf/localhost.json``` as a template.
 
 Both `-e` variables are optional and default during build time to the values shown.
 
-`SNMP_SITE` defaults to `localhost`, and is one pair of the SNMP Secrets.
+`SNMP_SITE` defaults to `local`, and is one pair of the SNMP Secrets.
 
 `SNMP_COMM_STRING` defaults to `public`, but would be the 'community string' for the SNMP_SITE.
 
@@ -213,7 +213,7 @@ docker run -d \
     --sysctl net.core.somaxconn=511 \
     --name="panoptes_docker" \
     --shm-size=2G \
-    -e SNMP_SITE="localhost" \
+    -e SNMP_SITE="local" \
     -e SNMP_COMM_STRING="public" \
     -v /data/servers/panoptes/conf/localhost.json:/home/panoptes/conf/localhost.json \
     -p 127.0.0.1:8080:3000/tcp \
