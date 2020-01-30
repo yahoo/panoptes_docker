@@ -113,7 +113,7 @@ into the container's redis, we do need you to run a script on the running contai
 
 ```bash
 docker exec -it panoptes_docker bash
-./etc/redis/populate_redis.sh
+/etc/redis/populate_redis.sh
 exit
 ```
 

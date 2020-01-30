@@ -47,7 +47,7 @@ We had some problems getting the community strings into redis, so you will need 
 
 ```bash
 docker exec -it panoptes_docker bash
-./etc/redis/populate_redis.sh
+/etc/redis/populate_redis.sh
 exit
 ```
 
