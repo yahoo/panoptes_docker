@@ -193,7 +193,8 @@ docker stop panoptes_docker && docker rm panoptes_docker
 
 ## Configuration
 
-Panoptes is run as a python module, so the relevant code is under site-packages in the venv (`/home/panoptes_v/lib/site-packages`)
+Panoptes is run as a python module, so the relevant code is under site-packages in the 
+venv (`/home/panoptes_v/lib/site-packages`).  You can `activate` this environment from within the docker container.
 
 ### Runtime
 
@@ -225,7 +226,8 @@ docker run -d \
 During the build of the container, the plugins from each subdirectory of `/resource/panoptes/plugins` are copied into 
 the container, so this is a good entry point into the structure.
 
-See the [Panoptes Plugin](https://github.com/yahoo/panoptes/blob/master/docs/Concepts.md#plugins) page for details
+See the [Panoptes Plugin](https://github.com/yahoo/panoptes/blob/master/docs/Concepts.md#plugins) page for details.
+You'll also find instructions on building plugins at the [Plugin Guide](https://getpanoptes.io/docs/panoptes-reference/plugin-guide)
 
 ## Additional Resources
 
