@@ -17,3 +17,6 @@ max_repetitions = 25
 
 [enrichment]
 preload = self:interface
+
+[transforms]
+interface_metrics_rates = rate:interface:bits_in,bits_out,packets_in,packets_out,errors_in,errors_out

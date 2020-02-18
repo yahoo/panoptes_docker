@@ -22,8 +22,11 @@ RUN apt-get update && \
 
 # Build the rest of the dependencies.
 RUN apt-get update && apt-get install -y \
-    daemontools-run \
+    daemontools \
     netcat \
+    net-tools \
+    dnsutils \
+    iputils-ping \
     openjdk-8-jdk \
     nano \
     python3.6 \
@@ -65,18 +68,9 @@ RUN mkdir -p /home/downloads && \
     mkdir -p /etc/grafana/provisioning/dashboards && \
     mkdir -p /var/lib/grafana/plugins && \
     mkdir -p /var/lib/grafana/dashboards && \
-    mkdir -p /home/panoptes/logs/discovery_plugin_agent && \
-    mkdir -p /home/panoptes/logs/polling_plugin_scheduler && \
-    mkdir -p /home/panoptes/logs/polling_plugin_agent && \
-    mkdir -p /home/panoptes/logs/influxdb_consumer && \
-    mkdir -p /home/panoptes/logs/enrichment_plugin_scheduler && \
-    mkdir -p /home/panoptes/logs/enrichment_plugin_agent && \
-    mkdir -p /home/panoptes/logs/discovery_plugin_scheduler && \
-    mkdir -p /home/panoptes/logs/discovery_plugin_agent && \
     rm -Rf /home/downloads && \
     cp /home/kafka/config/server.properties /home/kafka/config/server.properties.installed && \
     cp /etc/snmp/snmpd.conf                 /etc/snmp/snmpd.conf.installed && \
-    cp /usr/share/grafana/conf/sample.ini   /etc/grafana/grafana.ini && \
     cp /usr/share/grafana/conf/ldap.toml    /etc/grafana/ldap.toml && \
     chown -R grafana:grafana "/var/lib/grafana" "/home/logs/grafana" && \
     chown -R grafana:grafana "/var/lib/grafana/plugins" "/var/lib/grafana/dashboards" && \
@@ -92,6 +86,7 @@ RUN chown nobody:nogroup -R /home/kafka && \
     chown zookeeper -R /home/logs/zookeeper
 
 # provisioning Grafana - influxDB datasource and default dashboard for localhost.
+COPY resources/grafana/grafana.ini             /etc/grafana/grafana.ini
 COPY resources/grafana/datasource.yml          /etc/grafana/provisioning/datasources/datasource.yml
 COPY resources/grafana/dashboards.yml          /etc/grafana/provisioning/dashboards/sample.yml
 COPY resources/grafana/dashboard.json          /var/lib/grafana/dashboards/localhost.json
@@ -100,7 +95,6 @@ COPY resources/grafana/dashboard.json          /var/lib/grafana/dashboards/local
 # THP warnings come from the HOST, not the docker image.  Don't go chasing waterfalls.
 # docker command -> `--sysctl net.core.somaxconn=511`
 COPY resources/redis/redis.conf                 /etc/redis/redis.conf
-COPY resources/redis/populate_redis.sh          /etc/redis/populate_redis.sh
 
 # Building out daemontools -----
 WORKDIR /etc/service/
@@ -142,6 +136,14 @@ RUN adduser --disabled-password --gecos '' panoptes && \
     mkdir -p /home/panoptes/run && \
     mkdir -p /home/panoptes/logs && \
     mkdir -p /home/panoptes/conf && \
+    mkdir -p /home/panoptes/logs/discovery_plugin_agent && \
+    mkdir -p /home/panoptes/logs/polling_plugin_scheduler && \
+    mkdir -p /home/panoptes/logs/polling_plugin_agent && \
+    mkdir -p /home/panoptes/logs/influxdb_consumer && \
+    mkdir -p /home/panoptes/logs/enrichment_plugin_scheduler && \
+    mkdir -p /home/panoptes/logs/enrichment_plugin_agent && \
+    mkdir -p /home/panoptes/logs/discovery_plugin_scheduler && \
+    mkdir -p /home/panoptes/logs/discovery_plugin_agent && \
     chown panoptes:panoptes -R /home/panoptes
 
 # Copying over the default configurations for Panoptes
@@ -154,11 +156,11 @@ RUN chown panoptes:panoptes /home/panoptes/conf*
 
 # Copying over the plugins
 # these are from https://github.com/yahoo/panoptes/tree/master/examples/plugins
-COPY resources/panoptes/plugins/discovery/*.panoptes-plugin \
+COPY resources/panoptes/plugins/discovery/ \
         /home/panoptes_v/lib/python3.6/site-packages/yahoo_panoptes/plugins/discovery/
-COPY resources/panoptes/plugins/enrichment/*.panoptes-plugin \
+COPY resources/panoptes/plugins/enrichment/ \
         /home/panoptes_v/lib/python3.6/site-packages/yahoo_panoptes/plugins/enrichment/
-COPY resources/panoptes/plugins/polling/*.panoptes-plugin \
+COPY resources/panoptes/plugins/polling/ \
         /home/panoptes_v/lib/python3.6/site-packages/yahoo_panoptes/plugins/polling/
 
 # Helper scripts to expose various bits of the supporting services.
@@ -171,5 +173,5 @@ RUN python3 -m venv /home/panoptes_v && . /home/panoptes_v/bin/activate && pip3 
 # cwd /home
 WORKDIR /home/panoptes
 
-# Kick off daemontools -----
-ENTRYPOINT ["/usr/bin/svscanboot"]
+# Start Panoptes
+CMD ["/home/panoptes/startup.sh"]
