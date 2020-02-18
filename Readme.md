@@ -108,17 +108,7 @@ docker run -d \
     panoptes_docker
 ```
 
-There is a five minute delay until the first metrics will show up.  Due to an issue getting the snmp_community strings 
-into the container's redis, we do need you to run a script on the running container;
-
-```bash
-docker exec -it panoptes_docker bash
-/etc/redis/populate_redis.sh
-exit
-```
-
-This effectively writes the environment variables SNMP_SITE and SNMP_COMM_STRING into Redis.  These default to `local` 
-and `public` respectively, and can be overriden in the `docker run` command by supplying `-e <VAR> value`. 
+There is a five minute delay until the first metrics will show up.
 
 ### Visualize with Grafana
 

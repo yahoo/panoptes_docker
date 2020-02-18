@@ -42,15 +42,6 @@ docker run -d \
     panoptes_docker
 ```
 
-We had some problems getting the community strings into redis, so you will need to run the script 
-`/etc/redis/populate_redis.sh` inside the container.  We'll fix this inconvenience at some point.
-
-```bash
-docker exec -it panoptes_docker bash
-/etc/redis/populate_redis.sh
-exit
-```
-
 This will populate redis with the SNMP_SITE and SNMP_COMM_STRING environment variables.
 
 Note:  There is a five minute delay until the first metrics will show up.
